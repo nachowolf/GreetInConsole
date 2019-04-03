@@ -1,63 +1,111 @@
 package greet.greeter;
 
-import java.util.ArrayList;
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.util.*;
+
+import greet.console.GreetCommands;
 import greet.user.Account;
 import greet.user.User;
-import java.util.List;
 
 public class GreetMethods implements GreetUser {
 
-   private List<Account> users = new ArrayList<>();
+   private Set<Account> userList = new HashSet<>();
+
 
     @Override
     public String greet(String name) {
         String holdName = name.toLowerCase();
+
         return "Hello, " + capitilize(checkName(holdName));
     }
 
     @Override
     public String greet(String name, Language language) {
         String holdName = name.toLowerCase();
-        for(Account user : users){
-            if(user.getUsername() == holdName){
-                user.greet();
-                break;
-            }
-            User createUser = new User(holdName);
-            users.add(createUser);
-
-        }
         return greetLanguage(language) + capitilize(checkName(holdName));
     }
 
     @Override
-    public String greeted() {
-        return null;
+    public List greeted() {
+//         JsonArray userGreets = new JsonArray();
+        List<String> userCounts = new ArrayList();
+             for(Account user : userList){
+                 String name = capitilize(user.getUsername());
+                 String greeted = Integer.toString(user.getGreetCount());
+//                 JsonObject currentUser = new JsonObject();
+//                 currentUser.addProperty("user", name);
+//                 currentUser.addProperty("greeted", greeted);
+//                 userGreets.add(currentUser);
+                 String currentUser = "user: " + name + ", greeted: " + greeted;
+                 userCounts.add(currentUser);
+
+
+
+
+        }
+//        OutputStream os = new ByteArrayOutputStream();
+//        PrintStream ps = new PrintStream(os);
+        userCounts.forEach(user -> System.out.println(user));
+        return userCounts;
     }
 
     @Override
-    public String greeted(String user) {
-        return null;
+    public List greeted(String username) {
+        List<String> userCounts = new ArrayList();
+        String holdName = username.toLowerCase();
+        for(Account user : userList){
+            if(user.getUsername().contains(holdName)){
+                String name = capitilize(user.getUsername());
+                String greeted = Integer.toString(user.getGreetCount());
+//                 JsonObject currentUser = new JsonObject();
+//                 currentUser.addProperty("user", name);
+//                 currentUser.addProperty("greeted", greeted);
+//                 userGreets.add(currentUser);
+                String currentUser = "user: " + name + ", greeted: " + greeted;
+                userCounts.add(currentUser);
+            }
+
+
+
+        }
+//        OutputStream os = new ByteArrayOutputStream();
+//        PrintStream ps = new PrintStream(os);
+        userCounts.forEach(user -> System.out.println(user));
+        return userCounts;
     }
 
     @Override
     public int counter() {
-        return users.size();
+        return userList.size();
     }
 
     @Override
-    public void clear(String user) {
-
+    public void clear() {
+        userList.clear();
     }
 
     @Override
-    public void exit() {
-
+    public void clear(String name) {
+        String holdName = name.toLowerCase();
+        for (Account user : userList) {
+            if(user.getUsername().contains(holdName)){
+                userList.remove(user);
+                break;
+            }
+        }
     }
 
+
     @Override
-    public String help() {
-        return null;
+    public List help() {
+        List<String> allCommands = new ArrayList();
+       for(GreetCommands command : GreetCommands.values()) {
+           allCommands.add(capitilize(command.toString()));
+       }
+        allCommands.forEach(command -> System.out.println(command));
+        return allCommands;
     }
 
     public String capitilize(String string){
@@ -67,7 +115,7 @@ public class GreetMethods implements GreetUser {
 
     public String greetLanguage(Language language){
 
-        String response;
+        String response = "Hello, ";
 
 //        if(language == Language.English){
 //            response = "Hello, ";
@@ -78,25 +126,39 @@ public class GreetMethods implements GreetUser {
         else if(language == Language.Thai){
             response = "Sawa dee krahp, ";
         }
-        else {
-            response = "Hello, ";
-        }
+
         return response;
     }
 
     public String checkName(String holdName) {
-        for(Account user : users) {
-            if (user.getUsername() == holdName) {
-                user.greet();
-                break;
+
+        if(userList.size() == 0){
+            directAdd(holdName);
+        }
+        else {
+            int counted = 0;
+            for (Account user : userList) {
+                if (user.getUsername().contains(holdName)) {
+                    user.greet();
+                    break;
+                }
+                else{
+                    counted ++;
+                }
             }
-            else if(user.getUsername() != holdName){
-                continue;
+            if (counted == userList.size()){
+                directAdd(holdName);
             }
-            User createUser = new User(holdName);
-            users.add(createUser);
-            System.out.println(users.size());
         }
             return holdName;
+
+    }
+
+    public void directAdd(String name){
+        String holdName = name.toLowerCase();
+        User createUser = new User(holdName);
+        createUser.greet();
+        userList.add(createUser);
+
     }
 }

@@ -1,16 +1,18 @@
 package greet.greeter;
 
 
+import java.util.List;
+
 public interface GreetUser {
 
    String greet(String name);
    String greet(String name, Language language);
-   String greeted();
-   String greeted(String user);
+   List greeted();
+   List greeted(String user);
    int counter();
+   void clear();
    void clear(String user);
-   void exit();
-   String help();
+   List help();
 
 
 
