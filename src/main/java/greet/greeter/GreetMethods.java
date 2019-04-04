@@ -47,7 +47,7 @@ public class GreetMethods implements GreetUser {
         }
 //        OutputStream os = new ByteArrayOutputStream();
 //        PrintStream ps = new PrintStream(os);
-        userCounts.forEach(user -> System.out.println(user));
+//        userCounts.forEach(user -> System.out.println(user));
         return userCounts;
     }
 
@@ -72,7 +72,7 @@ public class GreetMethods implements GreetUser {
         }
 //        OutputStream os = new ByteArrayOutputStream();
 //        PrintStream ps = new PrintStream(os);
-        userCounts.forEach(user -> System.out.println(user));
+//        userCounts.forEach(user -> System.out.println(user));
         return userCounts;
     }
 
@@ -104,7 +104,7 @@ public class GreetMethods implements GreetUser {
        for(GreetCommands command : GreetCommands.values()) {
            allCommands.add(capitilize(command.toString()));
        }
-        allCommands.forEach(command -> System.out.println(command));
+//        allCommands.forEach(command -> System.out.println(command));
         return allCommands;
     }
 
@@ -131,7 +131,7 @@ public class GreetMethods implements GreetUser {
     }
 
     public String checkName(String holdName) {
-
+String newUser;
         if(userList.size() == 0){
             directAdd(holdName);
         }
@@ -150,15 +150,15 @@ public class GreetMethods implements GreetUser {
                 directAdd(holdName);
             }
         }
-            return holdName;
+            return newUser = holdName;
 
     }
 
-    public void directAdd(String name){
+    public String directAdd(String name){
         String holdName = name.toLowerCase();
         User createUser = new User(holdName);
         createUser.greet();
         userList.add(createUser);
-
+return createUser.getUsername();
     }
 }
