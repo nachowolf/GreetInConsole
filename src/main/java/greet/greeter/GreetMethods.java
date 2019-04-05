@@ -73,6 +73,7 @@ public class GreetMethods implements GreetUser {
 //        OutputStream os = new ByteArrayOutputStream();
 //        PrintStream ps = new PrintStream(os);
 //        userCounts.forEach(user -> System.out.println(user));
+
         return userCounts;
     }
 

@@ -9,10 +9,13 @@ import java.util.Scanner;
 import greet.greeter.Language;
 
 public class GreetConsole implements Console {
+    GreetMethods app = new GreetMethods();
+
+
 
 @Override
 public void input(String string){
-    GreetMethods app = new GreetMethods();
+
     String[] hold = string.toLowerCase().split(" ");
     String consoleCommand;
     String user;
@@ -26,9 +29,15 @@ public void input(String string){
             }
 
             else if(consoleCommand.equals(GreetCommands.greeted.toString())){
-                app.greeted().forEach(userGreeted -> System.out.println(userGreeted));
+                if(app.greeted().size() == 0){
+                    System.out.println("No users has been greeted");
+                }
+                else{
+                    app.greeted().forEach(userGreeted -> System.out.println(userGreeted));
+                }
             }
             else if(consoleCommand.equals(GreetCommands.help.toString())){
+                System.out.println("All greet app commands :");
                 app.help().forEach(command->System.out.println(command));
             }
             else if(consoleCommand.equals(GreetCommands.counter.toString())){
@@ -50,7 +59,12 @@ public void input(String string){
             System.out.println(app.greet(user));
         }
         else if(consoleCommand.equals(GreetCommands.greeted.toString())){
-            System.out.println(app.greeted(user));
+            if(app.greeted(user).size() == 0){
+                System.out.println("No such user");
+            }
+            else{
+                app.greeted(user).forEach(userGreeted -> System.out.println(userGreeted));
+            }
         }
         else if(consoleCommand.equals(GreetCommands.clear.toString())){
             app.clear(user);
@@ -69,6 +83,11 @@ public void input(String string){
         if(consoleCommand.equals(GreetCommands.greet.toString())){
             System.out.println(app.greet(user, checkLanguage(language)));
         }
+    }
+
+    else{
+        System.out.println("Not a valid option. Enter `help` to see all available commands.");
+
     }
 
 }
@@ -91,9 +110,10 @@ public Language checkLanguage(String lang){
 
     public static void main(String[] args){
         System.out.println("Greet Console Application Started...");
-        GreetConsole consoleApp = new GreetConsole();
         Scanner scanner = new Scanner(System.in);
+        GreetConsole consoleApp = new GreetConsole();
         while(true){
+
             ;
 //        JavaConsole console = new JavaConsole();
 //        console.setBackground(Color.DARK_GRAY);
