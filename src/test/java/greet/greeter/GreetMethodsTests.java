@@ -41,7 +41,8 @@ public class GreetMethodsTests {
         greetUser.greet("Nathri");
         greetUser.greet("James");
         greetUser.greet("Nathri");
-        assertEquals(Arrays.asList("user: Nathri, greeted: 2", "user: James, greeted: 1"), greetUser.greeted());
+        greetUser.greet("Thomas");
+        assertEquals(Arrays.asList("user: Nathri, greeted: 2", "user: James, greeted: 1", "user: Thomas, greeted: 1"), greetUser.greeted());
     }
 
     @Test

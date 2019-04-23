@@ -22,7 +22,7 @@ public class GreetConsoleTest {
             "Help\n" +
             "Greeted\n" +
             "Clear\n" +
-            "Counter\n", outContent.toString());
+            "Counter\n", outContent.toString().replaceAll("\r", ""));
 }
 
     @Test
@@ -31,7 +31,7 @@ public class GreetConsoleTest {
         System.setOut(new PrintStream(outContent));
         GreetConsole console = new GreetConsole();
         console.input("greet nathri");
-        assertEquals("Hello, Nathri\n", outContent.toString());
+        assertEquals("Hello, Nathri", outContent.toString().replaceAll("\n", "").replaceAll("\r", ""));
     }
 
     @Test
@@ -40,7 +40,7 @@ public class GreetConsoleTest {
         System.setOut(new PrintStream(outContent));
         GreetConsole console = new GreetConsole();
         console.input("greet jack english");
-        assertEquals("Hello, Jack\n", outContent.toString());
+        assertEquals("Hello, Jack", outContent.toString().replaceAll("\n", "").replaceAll("\r", ""));
     }
 @Test
     public void consoleGreetUserInJapaneseCommandTest(){
@@ -48,7 +48,7 @@ public class GreetConsoleTest {
         System.setOut(new PrintStream(outContent));
         GreetConsole console = new GreetConsole();
         console.input("greet sarah japanese");
-        assertEquals("Konichiwa, Sarah\n", outContent.toString());
+        assertEquals("Konichiwa, Sarah", outContent.toString().replaceAll("\n", "").replaceAll("\r", ""));
     }
 
     @Test
@@ -57,7 +57,7 @@ public class GreetConsoleTest {
         System.setOut(new PrintStream(outContent));
         GreetConsole console = new GreetConsole();
         console.input("greet Desmond thai");
-        assertEquals("Sawa dee krahp, Desmond\n", outContent.toString());
+        assertEquals("Sawa dee krahp, Desmond", outContent.toString().replaceAll("\n", "").replaceAll("\r", ""));
     }
     @Test
     public void consoleGreetedCommandTest(){
@@ -68,11 +68,12 @@ public class GreetConsoleTest {
         console.input("greet Jack");
         console.input("greet Desmond");
         console.input("greet Nathri");
+        outContent.reset();
         System.setOut(new PrintStream(outContent));
         console.input("greeted");
-        assertEquals("user: Nathri, greeted: 1\n" +
-                "user: Jack, greeted: 1\n" +
-                "user: Desmond, greeted: 2\n", outContent.toString());
+        assertEquals("user: Desmond, greeted: 2" +
+                "user: Jack, greeted: 1" +
+                "user: Nathri, greeted: 1", outContent.toString().replaceAll("\n", "").replaceAll("\r", ""));
     }
     @Test
     public void consoleGreetedSpecificUserCommandTest(){
@@ -84,7 +85,7 @@ public class GreetConsoleTest {
         console.input("greet Nathri");
         System.setOut(new PrintStream(outContent));
         console.input("greeted Nathri");
-        assertEquals("user: Nathri, greeted: 1\n", outContent.toString());
+        assertEquals("user: Nathri, greeted: 1", outContent.toString().replaceAll("\n", "").replaceAll("\r", ""));
     }
 
     @Test
@@ -93,7 +94,7 @@ public class GreetConsoleTest {
         GreetConsole console = new GreetConsole();
         System.setOut(new PrintStream(outContent));
         console.input("greeted");
-        assertEquals("No users has been greeted\n", outContent.toString());
+        assertEquals("No users has been greeted", outContent.toString().replaceAll("\n", "").replaceAll("\r", ""));
     }
     @Test
     public void consoleGreetedNoneGreetedUserCommandTest(){
@@ -101,7 +102,7 @@ public class GreetConsoleTest {
         GreetConsole console = new GreetConsole();
         System.setOut(new PrintStream(outContent));
         console.input("greeted Nathri");
-        assertEquals("No such user\n", outContent.toString());
+        assertEquals("No such user", outContent.toString().replaceAll("\n", "").replaceAll("\r", ""));
     }
     @Test
     public void consoleCounterCommandTest(){
@@ -109,38 +110,45 @@ public class GreetConsoleTest {
         GreetConsole console = new GreetConsole();
         System.setOut(new PrintStream(outContent));
         console.input("counter");
-        assertEquals("Users: 0\n", outContent.toString());
+        assertEquals("Users: 0", outContent.toString().replaceAll("\n", "").replaceAll("\r", ""));
     }
 
     @Test
     public void consoleClearCommandTest(){
         final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
         GreetConsole console = new GreetConsole();
         console.input("greet Nathri");
-        System.setOut(new PrintStream(outContent));
+        assertEquals("Hello, Nathri", outContent.toString().replaceAll("\n", "").replaceAll("\r", ""));
+        outContent.reset();
         console.input("greeted");
-        assertEquals("user: Nathri, greeted: 1\n", outContent.toString());
-        System.setOut(new PrintStream(outContent));
+        assertEquals("user: Nathri, greeted: 1", outContent.toString().replaceAll("\n", "").replaceAll("\r", ""));
+        outContent.reset();
         console.input("clear");
-        assertEquals("User list has been cleared\n", outContent.toString());
-        System.setOut(new PrintStream(outContent));
+        assertEquals("User list has been cleared", outContent.toString().replaceAll("\n", "").replaceAll("\r", ""));
+        outContent.reset();
         console.input("greeted");
-        assertEquals("No users has been greeted\n", outContent.toString());
+        assertEquals("No users has been greeted", outContent.toString().replaceAll("\n", "").replaceAll("\r", ""));
 }
 
     @Test
     public void consoleClearUserCommandTest(){
         final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         GreetConsole console = new GreetConsole();
+        System.setOut(new PrintStream(outContent));
         console.input("greet Nathri");
-        System.setOut(new PrintStream(outContent));
+        assertEquals("Hello, Nathri", outContent.toString().replaceAll("\n", "").replaceAll("\r", ""));
+
+        outContent.reset();
         console.input("greeted nathri");
-        assertEquals("user: Nathri, greeted: 1\n", outContent.toString());
-        System.setOut(new PrintStream(outContent));
+        assertEquals("user: Nathri, greeted: 1", outContent.toString().replaceAll("\n", "").replaceAll("\r", ""));
+
+        outContent.reset();
         console.input("clear nathri");
-        assertEquals("User list has been deleted \n", outContent.toString());
-        System.setOut(new PrintStream(outContent));
+        assertEquals("User has been deleted", outContent.toString().replaceAll("\n", "").replaceAll("\r", ""));
+
+        outContent.reset();
         console.input("greeted nathri");
-        assertEquals("No such user\n", outContent.toString());
+        assertEquals("No such user", outContent.toString().replaceAll("\n", "").replaceAll("\r", ""));
     }
 }

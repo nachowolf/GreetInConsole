@@ -11,7 +11,7 @@ import greet.user.User;
 
 public class GreetMethods implements GreetUser {
 
-   private Set<Account> userList = new HashSet<>();
+   private List<Account> userList = new ArrayList<>();
 
 
     @Override
