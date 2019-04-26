@@ -1,14 +1,38 @@
 package greet.console;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GreetConsoleTest {
+
+    public Connection getConnection() throws Exception {
+        Connection conn = DriverManager.getConnection("jdbc:h2:./db/users", "sa", "");
+        System.out.println("Successfully Connected to the database!");
+        return conn;
+    }
+    @BeforeEach
+    public void cleanUpTables() {
+        try {
+            try(Connection conn = getConnection()) {
+
+                Statement statement = conn.createStatement();
+                statement.addBatch("TRUNCATE table users");
+                statement.executeBatch();
+
+            }
+        } catch(Exception ex) {
+            System.out.println("These test will fail until the users table is created: " + ex);
+        }
+    }
 
 @Test
     public void TestHelpCommand(){

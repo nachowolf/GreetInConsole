@@ -1,101 +1,75 @@
 package greet.greeter;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.*;
+import java.util.logging.Logger;
 
 import greet.console.GreetCommands;
+import greet.database.dbRequests;
 import greet.user.Account;
 import greet.user.User;
 
 public class GreetMethods implements GreetUser {
 
-   private List<Account> userList = new ArrayList<>();
+
+        dbRequests request = new dbRequests();
+
+
 
 
     @Override
     public String greet(String name) {
         String holdName = name.toLowerCase();
+        String output = "";
+        if(checkName(holdName) == true){
+            output = "Hello, " + capitilize(holdName);
+        }
 
-        return "Hello, " + capitilize(checkName(holdName));
+        return output;
     }
 
     @Override
     public String greet(String name, Language language) {
         String holdName = name.toLowerCase();
-        return greetLanguage(language) + capitilize(checkName(holdName));
+        String output = "";
+        if(checkName(holdName) == true){
+            output = greetLanguage(language) + capitilize(holdName);
+        }
+        return output;
     }
 
     @Override
-    public List greeted() {
-//         JsonArray userGreets = new JsonArray();
-        List<String> userCounts = new ArrayList();
-             for(Account user : userList){
-                 String name = capitilize(user.getUsername());
-                 String greeted = Integer.toString(user.getGreetCount());
-//                 JsonObject currentUser = new JsonObject();
-//                 currentUser.addProperty("user", name);
-//                 currentUser.addProperty("greeted", greeted);
-//                 userGreets.add(currentUser);
-                 String currentUser = "user: " + name + ", greeted: " + greeted;
-                 userCounts.add(currentUser);
-
-
-
-
+    public String greeted(String username) {
+        String output = "No such user";
+        if(request.allUsers().containsKey((username.toLowerCase())) ){
+            return "Name: " + username + " greets: " + request.allUsers().get(username.toLowerCase());
         }
-//        OutputStream os = new ByteArrayOutputStream();
-//        PrintStream ps = new PrintStream(os);
-//        userCounts.forEach(user -> System.out.println(user));
-        return userCounts;
+        return output;
     }
 
     @Override
-    public List greeted(String username) {
-        List<String> userCounts = new ArrayList();
-        String holdName = username.toLowerCase();
-        for(Account user : userList){
-            if(user.getUsername().contains(holdName)){
-                String name = capitilize(user.getUsername());
-                String greeted = Integer.toString(user.getGreetCount());
-//                 JsonObject currentUser = new JsonObject();
-//                 currentUser.addProperty("user", name);
-//                 currentUser.addProperty("greeted", greeted);
-//                 userGreets.add(currentUser);
-                String currentUser = "user: " + name + ", greeted: " + greeted;
-                userCounts.add(currentUser);
-            }
-
-
-
-        }
-//        OutputStream os = new ByteArrayOutputStream();
-//        PrintStream ps = new PrintStream(os);
-//        userCounts.forEach(user -> System.out.println(user));
-
-        return userCounts;
+    public HashMap greeted() {
+        return request.allUsers();
     }
+
 
     @Override
     public int counter() {
-        return userList.size();
+        return request.allUsersCount();
     }
 
     @Override
     public void clear() {
-        userList.clear();
+        request.deleteAllUsers();
     }
 
     @Override
     public void clear(String name) {
         String holdName = name.toLowerCase();
-        for (Account user : userList) {
-            if(user.getUsername().contains(holdName)){
-                userList.remove(user);
-                break;
-            }
-        }
+       request.deleteUser(holdName);
     }
 
 
@@ -131,35 +105,10 @@ public class GreetMethods implements GreetUser {
         return response;
     }
 
-    public String checkName(String holdName) {
-String newUser;
-        if(userList.size() == 0){
-            directAdd(holdName);
-        }
-        else {
-            int counted = 0;
-            for (Account user : userList) {
-                if (user.getUsername().contains(holdName)) {
-                    user.greet();
-                    break;
-                }
-                else{
-                    counted ++;
-                }
-            }
-            if (counted == userList.size()){
-                directAdd(holdName);
-            }
-        }
-            return newUser = holdName;
-
+    public boolean checkName(String holdName) {
+            request.addUser(holdName);
+return true;
     }
 
-    public String directAdd(String name){
-        String holdName = name.toLowerCase();
-        User createUser = new User(holdName);
-        createUser.greet();
-        userList.add(createUser);
-return createUser.getUsername();
-    }
+
 }
