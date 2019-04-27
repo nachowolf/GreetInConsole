@@ -34,7 +34,8 @@ public void input(String string){
                 }
                 else{
                     for (Object i : app.greeted().keySet()) {
-                        System.out.println("user: " + capitilize(i.toString()) + " greeted: " + app.greeted().get(i));
+//                        System.out.println(i);
+                        System.out.println("user: " + capitilize(i.toString()) + ", greeted: " + app.greeted().get(i));
                     }
 //                    app.greeted().forEach(userGreeted -> System.out.println(userGreeted));
                 }
@@ -66,7 +67,7 @@ public void input(String string){
                 System.out.println("No such user");
             }
             else{
-                System.out.println(app.greeted());
+                System.out.println(app.greeted(user));
             }
         }
         else if(consoleCommand.equals(GreetCommands.clear.toString())){

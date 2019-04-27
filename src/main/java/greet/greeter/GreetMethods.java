@@ -45,7 +45,7 @@ public class GreetMethods implements GreetUser {
     public String greeted(String username) {
         String output = "No such user";
         if(request.allUsers().containsKey((username.toLowerCase())) ){
-            return "Name: " + username + " greets: " + request.allUsers().get(username.toLowerCase());
+            return "user: " + capitilize(username) + ", greeted: " + request.allUsers().get(username.toLowerCase());
         }
         return output;
     }

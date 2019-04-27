@@ -4,12 +4,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.*;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class dbRequests {
 
     final String COUNT_ALL_USERS_SQL = "select count(*) from users";
 
-    final String GET_ALL_USERS_SQL = "select name, greets from users order by name desc";
+    final String GET_ALL_USERS_SQL = "select name, greets from users order by name asc";
 
     final String FIND_USER_SQL = "select name, greets from users where name = ?";
 
@@ -91,14 +92,16 @@ public class dbRequests {
         return count;
     }
 
-    public HashMap allUsers(){
-        HashMap <String, Integer> userList = new HashMap <String, Integer>();
+    public LinkedHashMap allUsers(){
+        LinkedHashMap<String, Integer> userList = new LinkedHashMap <String, Integer>();
         try{
             ResultSet rsUsers = psGetAllUsers.executeQuery();
             while (rsUsers.next()) {
+//                System.out.print(rsUsers.getString("name"));
                 userList.put(rsUsers.getString("name"), rsUsers.getInt("greets"));
 
             }
+//            System.out.println(userList.keySet());
 
 
         } catch (SQLException ex) {
