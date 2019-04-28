@@ -51,8 +51,12 @@ public class GreetMethods implements GreetUser {
     }
 
     @Override
-    public HashMap greeted() {
-        return request.allUsers();
+    public ArrayList greeted() {
+        ArrayList<String> list = new ArrayList<>();
+        for (Object i : request.allUsers().keySet()) {
+            list.add("user: " + capitilize(i.toString()) + ", greeted: " + request.allUsers().get(i));
+        }
+        return list;
     }
 
 

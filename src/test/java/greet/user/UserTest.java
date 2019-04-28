@@ -58,20 +58,5 @@ public class UserTest {
         assertEquals(1, user.getGreetCount());
     }
 
-    @Test
-    public void countAllUsersInDatabase(){
-        User user = new User();
-        user.addUser("Nathri");
-        user.addUser("Nappa");
-        assertEquals(2, user.allUsersCount());
-    }
 
-    @Test
-    public void getAllUsersInDatabase(){
-        User user = new User();
-        user.addUser("Nathri");
-        user.addUser("Nappa");
-        user.addUser("Nathri");
-        assertEquals(2, user.allUsers());
-    }
 }

@@ -1,11 +1,35 @@
 package greet.greeter;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GreetMethodsTests {
+
+    public Connection getConnection() throws Exception {
+        Connection conn = DriverManager.getConnection("jdbc:h2:./db/users", "sa", "");
+        System.out.println("Successfully Connected to the database!");
+        return conn;
+    }
+    @BeforeEach
+    public void cleanUpTables() {
+        try {
+            try(Connection conn = getConnection()) {
+
+                Statement statement = conn.createStatement();
+                statement.addBatch("TRUNCATE table users");
+                statement.executeBatch();
+
+            }
+        } catch(Exception ex) {
+            System.out.println("These test will fail until the users table is created: " + ex);
+        }
+    }
 
     @Test
     public void shouldGreetUserInEnglish(){
@@ -42,7 +66,7 @@ public class GreetMethodsTests {
         greetUser.greet("James");
         greetUser.greet("Nathri");
         greetUser.greet("Thomas");
-        assertEquals(Arrays.asList("user: Nathri, greeted: 2", "user: James, greeted: 1", "user: Thomas, greeted: 1"), greetUser.greeted());
+        assertEquals(Arrays.asList("user: James, greeted: 1", "user: Nathri, greeted: 2", "user: Thomas, greeted: 1"), greetUser.greeted());
     }
 
     @Test
@@ -50,7 +74,7 @@ public class GreetMethodsTests {
         GreetMethods greetUser = new GreetMethods();
         greetUser.greet("Nathri");
         greetUser.greet("Nathri");
-        assertEquals(Arrays.asList("user: Nathri, greeted: 2"), greetUser.greeted("Nathri"));
+        assertEquals("user: Nathri, greeted: 2", greetUser.greeted("Nathri"));
     }
 
     @Test

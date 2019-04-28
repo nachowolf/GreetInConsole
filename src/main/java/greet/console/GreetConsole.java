@@ -33,11 +33,8 @@ public void input(String string){
                     System.out.println("No users has been greeted");
                 }
                 else{
-                    for (Object i : app.greeted().keySet()) {
-//                        System.out.println(i);
-                        System.out.println("user: " + capitilize(i.toString()) + ", greeted: " + app.greeted().get(i));
-                    }
-//                    app.greeted().forEach(userGreeted -> System.out.println(userGreeted));
+
+                    app.greeted().forEach(userGreeted -> System.out.println(userGreeted));
                 }
             }
             else if(consoleCommand.equals(GreetCommands.help.toString())){

@@ -8,7 +8,7 @@ public interface GreetUser {
 
    String greet(String name);
    String greet(String name, Language language);
-   HashMap greeted();
+   List greeted();
    String greeted(String user);
    int counter();
    void clear();
