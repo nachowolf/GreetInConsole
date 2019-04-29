@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class GreetConsoleTest {
 
     public Connection getConnection() throws Exception {
-        Connection conn = DriverManager.getConnection("jdbc:h2:./db/users", "sa", "");
+        Connection conn = DriverManager.getConnection("jdbc:h2:./target/users", "sa", "");
         System.out.println("Successfully Connected to the database!");
         return conn;
     }

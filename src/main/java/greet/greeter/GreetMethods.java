@@ -1,16 +1,11 @@
 package greet.greeter;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
+
 import java.util.*;
-import java.util.logging.Logger;
 
 import greet.console.GreetCommands;
 import greet.database.dbRequests;
-import greet.user.Account;
-import greet.user.User;
+
 
 public class GreetMethods implements GreetUser {
 

@@ -36,8 +36,10 @@ public class dbRequests {
 
     public dbRequests() {
         try {
+            System.out.println("try");
+//            Class.forName("org.h2.Driver");
             conn = DriverManager.
-                    getConnection("jdbc:h2:./db/users", "sa", "");
+                    getConnection("jdbc:h2:./target/users", "sa", "");
             psCountAllUsers = conn.prepareStatement(COUNT_ALL_USERS_SQL);
             psGetAllUsers = conn.prepareStatement(GET_ALL_USERS_SQL);
             psCreateNewUser = conn.prepareStatement(INSERT_USER_SQL);
@@ -48,7 +50,10 @@ public class dbRequests {
             psDeleteAllUsers = conn.prepareStatement(DELETE_ALL_USERS_SQL);
 
         } catch(Exception ex) {
+            System.out.println("catch");
             ex.printStackTrace();
+        } finally {
+            System.out.println("finally");
         }
     }
 

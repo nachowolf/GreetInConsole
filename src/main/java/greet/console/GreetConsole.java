@@ -115,7 +115,7 @@ public Language checkLanguage(String lang){
         GreetConsole consoleApp = new GreetConsole();
         while(true){
 
-            ;
+
 //        JavaConsole console = new JavaConsole();
 //        console.setBackground(Color.DARK_GRAY);
 //        console.setForeground(Color.green);

@@ -1,1 +1,0 @@
---insert into users (name, greets) values ('john', 1);
