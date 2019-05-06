@@ -1,12 +1,13 @@
 package greet.console;
 
 
-import greet.greeter.GreetMethods;
-import greet.greeter.Language;
+import greet.enums.GreetCommands;
+import greet.greeter.GreetCounterMap;
+import greet.enums.Language;
 
 
 public class GreetConsole implements Console {
-    GreetMethods app = new GreetMethods();
+    GreetCounterMap app = new GreetCounterMap();
 
 
 

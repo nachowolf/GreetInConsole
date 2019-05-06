@@ -1,5 +1,6 @@
 package greet.greeter;
 
+import greet.enums.Language;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +10,7 @@ import java.sql.Statement;
 import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class GreetMethodsTests {
+public class GreetCounterMapTests {
 
     public Connection getConnection() throws Exception {
         Connection conn = DriverManager.getConnection("jdbc:h2:./target/users", "sa", "");
@@ -33,35 +34,35 @@ public class GreetMethodsTests {
 
     @Test
     public void shouldGreetUserInEnglish(){
-        GreetMethods greetUser = new GreetMethods();
+        GreetCounterMap greetUser = new GreetCounterMap();
         assertEquals("Hello, Nathri",greetUser.greet("Nathri", Language.English));
         assertEquals(1, greetUser.counter());
     }
 
     @Test
     public void shouldGreetUserInJapanese(){
-        GreetMethods greetUser = new GreetMethods();
+        GreetCounterMap greetUser = new GreetCounterMap();
         assertEquals("Konichiwa, Nathri",greetUser.greet("Nathri", Language.Japanese));
         assertEquals(1, greetUser.counter());
     }
 
     @Test
     public void shouldGreetUserInThai(){
-        GreetMethods greetUser = new GreetMethods();
+        GreetCounterMap greetUser = new GreetCounterMap();
         assertEquals("Sawa dee krahp, Nathri",greetUser.greet("Nathri", Language.Thai));
         assertEquals(1, greetUser.counter());
     }
 
     @Test
     public void shouldGreetUserInEnglishByDefault(){
-        GreetMethods greetUser = new GreetMethods();
+        GreetCounterMap greetUser = new GreetCounterMap();
         assertEquals("Hello, Nathri",greetUser.greet("Nathri"));
         assertEquals(1, greetUser.counter());
     }
 
     @Test
     public void shouldShowHowManyTimesEachUserHasBeenGreeted(){
-        GreetMethods greetUser = new GreetMethods();
+        GreetCounterMap greetUser = new GreetCounterMap();
         greetUser.greet("Nathri");
         greetUser.greet("James");
         greetUser.greet("Nathri");
@@ -71,7 +72,7 @@ public class GreetMethodsTests {
 
     @Test
     public void shouldShowHowManyTimesUsersHasBeenGreeted(){
-        GreetMethods greetUser = new GreetMethods();
+        GreetCounterMap greetUser = new GreetCounterMap();
         greetUser.greet("Nathri");
         greetUser.greet("Nathri");
         assertEquals("user: Nathri, greeted: 2", greetUser.greeted("Nathri"));
@@ -79,7 +80,7 @@ public class GreetMethodsTests {
 
     @Test
     public void shouldShowHowManyTimesASpecificUserHasBeenGreeted(){
-        GreetMethods greetUser = new GreetMethods();
+        GreetCounterMap greetUser = new GreetCounterMap();
         greetUser.greet("Nathri");
         greetUser.greet("Nathri");
         greetUser.greet("John");
@@ -91,7 +92,7 @@ public class GreetMethodsTests {
 
     @Test
     public void shouldClearListOfUsers(){
-        GreetMethods greetUser = new GreetMethods();
+        GreetCounterMap greetUser = new GreetCounterMap();
         greetUser.greet("Nathri");
         greetUser.greet("John");
         greetUser.greet("Thomas");
@@ -104,7 +105,7 @@ public class GreetMethodsTests {
 
     @Test
     public void shouldClearOneGreetedUsers(){
-        GreetMethods greetUser = new GreetMethods();
+        GreetCounterMap greetUser = new GreetCounterMap();
         greetUser.greet("Nathri");
         greetUser.greet("John");
         greetUser.greet("Thomas");
@@ -117,7 +118,7 @@ public class GreetMethodsTests {
 
     @Test
     public void shouldReturnAllPossibleCommands(){
-        GreetMethods greetUser = new GreetMethods();
+        GreetCounterMap greetUser = new GreetCounterMap();
         assertEquals(Arrays.asList("Greet", "Quit", "Help", "Greeted", "Clear", "Counter"), greetUser.help());
     }
 }

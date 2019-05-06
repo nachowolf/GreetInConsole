@@ -3,11 +3,12 @@ package greet.greeter;
 
 import java.util.*;
 
-import greet.console.GreetCommands;
+import greet.enums.GreetCommands;
 import greet.database.dbRequests;
+import greet.enums.Language;
 
 
-public class GreetMethods implements GreetUser {
+public class GreetCounterMap implements GreetUser {
 
 
         dbRequests request = new dbRequests();
