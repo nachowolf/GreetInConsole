@@ -1,4 +1,4 @@
-package greet.console;
+package greet.enums;
 
 public enum GreetCommands {
     greet,
