@@ -1,13 +1,14 @@
 package greet;
 
 import greet.enums.GreetCommands;
+import greet.greeter.GreetCounterDB;
 import greet.greeter.GreetCounterMap;
 import greet.greeter.GreetCounter;
 import greet.methods.Helper;
 
 public class CommandExecuter {
 
-    GreetCounter app = new GreetCounterMap();
+    GreetCounter app = new GreetCounterDB();
 
     public void error(){
         System.out.println("Not a valid option. Enter `help` to see all available commands.");
