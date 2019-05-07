@@ -3,112 +3,69 @@ package greet.greeter;
 
 import java.util.*;
 
-import greet.enums.GreetCommands;
-import greet.database.dbRequests;
 import greet.enums.Language;
+import greet.methods.Helper;
 
 
-public class GreetCounterMap implements GreetUser {
+public class GreetCounterMap implements GreetCounter {
 
-
-        dbRequests request = new dbRequests();
-
-
-
+    Map<String, Integer> userList = new TreeMap<>();
 
     @Override
     public String greet(String name) {
-        String holdName = name.toLowerCase();
-        String output = "";
-        if(checkName(holdName) == true){
-            output = "Hello, " + capitilize(holdName);
+        if(!userList.containsKey(name)){
+            userList.put(name, 0);
         }
+        Integer greets = userList.get(name);
+        userList.put(name, greets+1);
+        return "Hello, " + Helper.capitilize(name);
 
-        return output;
     }
 
     @Override
     public String greet(String name, Language language) {
-        String holdName = name.toLowerCase();
-        String output = "";
-        if(checkName(holdName) == true){
-            output = greetLanguage(language) + capitilize(holdName);
+        if(!userList.containsKey(name)){
+            userList.put(name, 0);
         }
-        return output;
+        Integer greets = userList.get(name);
+        userList.put(name, greets++);
+        return Helper.greetLanguage(language) + Helper.capitilize(name);
     }
 
     @Override
-    public String greeted(String username) {
-        String output = "No such user";
-        if(request.allUsers().containsKey((username.toLowerCase())) ){
-            return "user: " + capitilize(username) + ", greeted: " + request.allUsers().get(username.toLowerCase());
+    public List greeted() {
+        ArrayList<String> result = new ArrayList<String>();
+        for(Map.Entry<String,Integer> entry : userList.entrySet()) {
+            String user = entry.getKey();
+            Integer greeted = entry.getValue();
+            result.add("user: " + Helper.capitilize(user) + ", greeted: " + greeted);
         }
-        return output;
+        return result;
     }
 
     @Override
-    public ArrayList greeted() {
-        ArrayList<String> list = new ArrayList<>();
-        for (Object i : request.allUsers().keySet()) {
-            list.add("user: " + capitilize(i.toString()) + ", greeted: " + request.allUsers().get(i));
+    public String greeted(String user) {
+        String result = "No such user has been greeted.";
+        if (userList.containsKey(user)){
+            result = "user: " + Helper.capitilize(user) + ", greeted: " + userList.get(user);
         }
-        return list;
-    }
-
-
-    @Override
-    public int counter() {
-        return request.allUsersCount();
+        return result;
     }
 
     @Override
-    public void clear() {
-        request.deleteAllUsers();
+    public String counter() {
+        return "Users: " + userList.size();
     }
 
     @Override
-    public void clear(String name) {
-        String holdName = name.toLowerCase();
-       request.deleteUser(holdName);
+    public String clear() {
+        userList.clear();
+        return "All users have been deleted";
     }
-
 
     @Override
-    public List help() {
-        List<String> allCommands = new ArrayList();
-       for(GreetCommands command : GreetCommands.values()) {
-           allCommands.add(capitilize(command.toString()));
-       }
-//        allCommands.forEach(command -> System.out.println(command));
-        return allCommands;
+    public String clear(String user) {
+        userList.remove(user);
+        return "User has been deleted";
     }
-
-    public String capitilize(String string){
-        String cap = string.substring(0,1).toUpperCase() + string.substring(1);
-        return cap;
-    }
-
-    public String greetLanguage(Language language){
-
-        String response = "Hello, ";
-
-//        if(language == Language.English){
-//            response = "Hello, ";
-//        }
-        if(language == Language.Japanese){
-            response = "Konichiwa, ";
-        }
-        else if(language == Language.Thai){
-            response = "Sawa dee krahp, ";
-        }
-
-        return response;
-    }
-
-    public boolean checkName(String holdName) {
-            request.addUser(holdName);
-return true;
-    }
-
-
 }

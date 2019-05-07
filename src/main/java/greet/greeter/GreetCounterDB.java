@@ -4,9 +4,10 @@ import greet.enums.Language;
 import greet.methods.Helper;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
-public class GreetCounterDB  implements GreetUser{
+public class GreetCounterDB  implements GreetCounter {
 
     final String COUNT_ALL_USERS_SQL = "select count(*) from users";
 
@@ -24,7 +25,7 @@ public class GreetCounterDB  implements GreetUser{
 
     final String DELETE_ALL_USERS_SQL = "truncate table users";
 
-    Helper method = new Helper();
+
 
     Connection conn;
     PreparedStatement psCountAllUsers;
@@ -82,7 +83,7 @@ public class GreetCounterDB  implements GreetUser{
             ex.printStackTrace();
         }
        finally {
-            return "Hello, " + method.capitilize(name);
+            return "Hello, " + Helper.capitilize(name);
         }
     }
 
@@ -110,17 +111,36 @@ public class GreetCounterDB  implements GreetUser{
             ex.printStackTrace();
         }
         finally {
-            return method.greetLanguage(language) + method.capitilize(name);
+            return Helper.greetLanguage(language) + Helper.capitilize(name);
         }
     }
 
     @Override
     public List greeted() {
-        return null;
+
+        ArrayList<String> result = new ArrayList<String>();
+        try {
+            ResultSet rsUsers = psGetAllUsers.executeQuery();
+
+            while (rsUsers.next()) {
+                String user = rsUsers.getString("name");
+                Integer greeted = rsUsers.getInt("greets");
+                result.add("user: " + Helper.capitilize(user) + ", greeted: " + greeted);
+
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            return result;
+        }
     }
+
 
     @Override
     public String greeted(String name) {
+        String result = "No such user has been greeted.";
         try {
             psFindUser.setString(1, name);
             ResultSet rsUserFound = psFindUser.executeQuery();
@@ -128,34 +148,61 @@ public class GreetCounterDB  implements GreetUser{
             if(rsUserFound.next()){
                 String user = rsUserFound.getString("name");
                 Integer greeted = rsUserFound.getInt("greets");
-                return "user: " + method.capitilize(user) + ", greeted: " + greeted;
+                result = "user: " + Helper.capitilize(user) + ", greeted: " + greeted;
             }
 
         } catch (SQLException ex) {
             ex.printStackTrace();
     }
         finally {
-            return null;
+            return result;
         }
         }
 
     @Override
-    public int counter() {
-        return 0;
+    public String counter() {
+        String count = "0";
+        try {
+            ResultSet rs = psCountAllUsers.executeQuery();
+//            ResultSet rs = st.executeQuery("select count(*) from TABLE_NAME");
+            rs.next();
+            count = rs.getString(1);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return "Users: " + count;
     }
 
     @Override
-    public void clear() {
+    public String clear() {
+        String result = null;
+        try{
+            psDeleteAllUsers.execute();
+            result = "All users have been deleted";
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            return result;
+        }
     }
 
     @Override
-    public void clear(String user) {
-
+    public String clear(String name) {
+        String result = "No such user";
+        try{
+            psDeleteUser.setString(1, name);
+            psDeleteUser.execute();
+            result = "User has been deleted";
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            return result;
+        }
     }
 
-    @Override
-    public List help() {
-        return null;
-    }
+
 }
