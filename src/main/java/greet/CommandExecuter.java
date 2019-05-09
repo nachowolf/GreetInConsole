@@ -10,62 +10,59 @@ public class CommandExecuter {
 
     GreetCounter app = new GreetCounterDB();
 
-    public void error(){
-        System.out.println("Not a valid option. Enter `help` to see all available commands.");
-    }
 
     public void execute(String consoleCommand){
         if(consoleCommand.equals(GreetCommands.quit.toString())){
-            System.out.println("Closing Application...");
+            Helper.print("Closing Application...");
             System.exit(0);
         }
 
         else if(consoleCommand.equals(GreetCommands.greeted.toString())){
             if(app.greeted().size() == 0){
-                System.out.println("No users has been greeted");
+                Helper.print("No users has been greeted");
             }
             else{
 
-                app.greeted().forEach(userGreeted -> System.out.println(userGreeted));
+                Helper.print(app.greeted());
             }
         }
         else if(consoleCommand.equals(GreetCommands.help.toString())){
-            System.out.println("All greet app commands :");
+            Helper.print("All greet app commands :");
             for (GreetCommands command : GreetCommands.values()) {
-                System.out.println(command);
+                Helper.print(command.toString());
                 }
         }
         else if(consoleCommand.equals(GreetCommands.counter.toString())){
-            System.out.println(app.counter());
+            Helper.print(app.counter());
         }
         else if(consoleCommand.equals(GreetCommands.clear.toString())){
-            System.out.println(app.clear());
+            Helper.print(app.clear());
         }
         else{
-            error();
+            Helper.print("Not a valid option. Enter `help` to see all available commands.");
         }
     }
 
     public void execute(String consoleCommand, String user){
         if(consoleCommand.equals(GreetCommands.greet.toString())){
-            System.out.println(app.greet(user));
+            Helper.print(app.greet(user));
         }
         else if(consoleCommand.equals(GreetCommands.greeted.toString())){
-                System.out.println(app.greeted(user));
+            Helper.print(app.greeted(user));
 
         }
         else if(consoleCommand.equals(GreetCommands.clear.toString())){
-            System.out.println(app.clear(user));
+            Helper.print(app.clear(user));
         }
         else{
-            error();
+            Helper.print("Not a valid option. Enter `help` to see all available commands.");
         }
     }
 
 
     public void execute(String consoleCommand, String user, String language){
         if(consoleCommand.equals(GreetCommands.greet.toString())){
-            System.out.println(app.greet(user, Helper.checkLanguage(language)));
+            Helper.print(app.greet(user, Helper.checkLanguage(language)));
         }
     }
     }
