@@ -10,7 +10,7 @@ public interface GreetCounter {
 
    String greet(String name);
    String greet(String name, Language language);
-   List greeted();
+   String greeted();
    String greeted(String user);
    String counter();
    String clear();

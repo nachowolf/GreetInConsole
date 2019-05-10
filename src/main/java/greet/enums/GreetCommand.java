@@ -1,6 +1,6 @@
 package greet.enums;
 
-public enum GreetCommands {
+public enum GreetCommand {
     greet,
     quit,
     help,

@@ -33,12 +33,16 @@ public class GreetCounterMap implements GreetCounter {
     }
 
     @Override
-    public List greeted() {
-        ArrayList<String> result = new ArrayList<String>();
-        for(Map.Entry<String,Integer> entry : userList.entrySet()) {
-            String user = entry.getKey();
-            Integer greeted = entry.getValue();
-            result.add("user: " + Helper.capitilize(user) + ", greeted: " + greeted);
+    public String greeted() {
+//        ArrayList<String> result = new ArrayList<String>();
+        String result = "No users has been greeted.";
+        if(userList.size() > 0){
+            result = "";
+            for(Map.Entry<String,Integer> entry : userList.entrySet()) {
+                String user = entry.getKey();
+                Integer greeted = entry.getValue();
+                result += "user: " + Helper.capitilize(user) + ", greeted: " + greeted + " \n";
+            }
         }
         return result;
     }

@@ -1,36 +1,40 @@
 package greet;
 
-import greet.enums.Language;
+import greet.enums.*;
+import greet.greeter.GreetCounterMap;
+import greet.methods.Helper;
 
 public class CommandExtractor {
-    CommandExecuter process = new CommandExecuter();
 
+    private GreetCommand command;
+    private String name;
+    private Language language;
 
-public void extract(String string) {
+    public CommandExtractor(String string){
+        String[] hold = string.toLowerCase().split(" ");
+        this.command = GreetCommand.valueOf(hold[0]);
 
-    String consoleCommand;
-    String user;
-    String language;
+        if(hold.length >= 2){
+            this.name = hold[1];
+            if(hold.length == 3){
+                this.language = Language.valueOf(hold[3]);
+            }
 
-
-    String[] hold = string.toLowerCase().split(" ");
-
-    if(hold.length == 1){
-        consoleCommand = hold[0];
-        process.execute(consoleCommand);
-    }
-    else if(hold.length == 2){
-        consoleCommand = hold[0];
-        user = hold[1];
-        process.execute(consoleCommand, user);
-    }
-    else if(hold.length == 3){
-        consoleCommand = hold[0];
-        user = hold[1];
-        language = hold[2];
-        process.execute(consoleCommand, user, language);
+        }
     }
 
-
+    public GreetCommand getCommand(){
+        return this.command;
     }
+
+    public String getName(){
+        return this.name;
+    }
+
+    public Language getLanguage(){
+        return this.language;
+    }
+
+
+
 }
