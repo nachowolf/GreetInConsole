@@ -1,7 +1,6 @@
 import greet.CommandExecuter;
 import greet.CommandExtractor;
-import greet.greeter.GreetCounter;
-import greet.greeter.GreetCounterMap;
+import greet.greeter.*;
 import greet.methods.Helper;
 
 import java.util.Scanner;
@@ -12,7 +11,7 @@ public class Main {
         Helper.print(Helper.ANSI_GREEN + "Greet Console Application Started... " + Helper.ANSI_RESET);
         Scanner scanner = new Scanner(System.in);
         Helper helper = new Helper();
-        GreetCounter counter = new GreetCounterMap();
+        GreetCounter counter = new GreetCounterDB();
         CommandExecuter executer = new CommandExecuter(counter);
         while (true) {
 
