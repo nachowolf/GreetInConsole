@@ -26,10 +26,10 @@ public class Helper {
 
         String response = "Hello, ";
 
-        if(language == Language.Japanese){
+        if(language == Language.japanese){
             response = "Konichiwa, ";
         }
-        else if(language == Language.Thai){
+        else if(language == Language.thai){
             response = "Sawa dee krahp, ";
         }
 
@@ -37,7 +37,7 @@ public class Helper {
     }
 
     public static Language checkLanguage(String lang) {
-        Language chosenLanguage = Language.English;
+        Language chosenLanguage = Language.english;
         for (Language language : Language.values()) {
             if (capitilize(lang).equals(language.toString())) {
                 chosenLanguage = language;
@@ -53,8 +53,4 @@ public class Helper {
 
     }
 
-    public static void print(List input){
-        input.forEach(userGreeted ->  System.out.println(ANSI_CYAN + userGreeted + " " + ANSI_RESET));
-
-    }
 }

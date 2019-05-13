@@ -15,21 +15,21 @@ public class GreetCounterMapTests {
     @Test
     public void shouldGreetUserInEnglish() {
         GreetCounter greetUser = new GreetCounterMap();
-        assertEquals("Hello, Nathri", greetUser.greet("Nathri", Language.English));
+        assertEquals("Hello, Nathri", greetUser.greet("Nathri", Language.english));
         assertEquals("Users: 1", greetUser.counter());
     }
 
     @Test
     public void shouldGreetUserInJapanese() {
         GreetCounter greetUser = new GreetCounterMap();
-        assertEquals("Konichiwa, Nathri", greetUser.greet("Nathri", Language.Japanese));
+        assertEquals("Konichiwa, Nathri", greetUser.greet("Nathri", Language.japanese));
         assertEquals("Users: 1", greetUser.counter());
     }
 
     @Test
     public void shouldGreetUserInThai() {
         GreetCounter greetUser = new GreetCounterMap();
-        assertEquals("Sawa dee krahp, Nathri", greetUser.greet("Nathri", Language.Thai));
+        assertEquals("Sawa dee krahp, Nathri", greetUser.greet("Nathri", Language.thai));
         assertEquals("Users: 1", greetUser.counter());
     }
 

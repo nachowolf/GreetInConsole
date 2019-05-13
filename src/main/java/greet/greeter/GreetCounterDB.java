@@ -119,16 +119,22 @@ public class GreetCounterDB  implements GreetCounter {
     public String greeted() {
 
 //        ArrayList<String> result = new ArrayList<String>();
-        String result = "No users has been greeted.";
+        int count = 0;
+        String result = "No users has been greeted";
         try {
             ResultSet rsUsers = psGetAllUsers.executeQuery();
+            ResultSet rs = psCountAllUsers.executeQuery();
+            rs.next();
+            int maxUsers = rs.getInt(1);
 
            if(rsUsers.next()){
                while (rsUsers.next()) {
                    String user = rsUsers.getString("name");
                    Integer greeted = rsUsers.getInt("greets");
-                   result += "user: " + Helper.capitilize(user) + ", greeted: " + greeted + " \n";
-
+                   result += "user: " + Helper.capitilize(user) + ", greeted: " + greeted;
+                   if(++count != maxUsers){
+                       result+= "\n";
+                   }
                }
            }
 
@@ -143,7 +149,7 @@ public class GreetCounterDB  implements GreetCounter {
 
     @Override
     public String greeted(String name) {
-        String result = "No such user has been greeted.";
+        String result = "No such user has been greeted";
         try {
             psFindUser.setString(1, name);
             ResultSet rsUserFound = psFindUser.executeQuery();

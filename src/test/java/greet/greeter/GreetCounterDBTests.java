@@ -36,21 +36,21 @@ public class GreetCounterDBTests {
     @Test
     public void shouldGreetUserInEnglish(){
         GreetCounter greetCounter = new GreetCounterDB();
-        assertEquals("Hello, Nathri", greetCounter.greet("Nathri", Language.English));
+        assertEquals("Hello, Nathri", greetCounter.greet("Nathri", Language.english));
         assertEquals("Users: 1", greetCounter.counter());
     }
 
     @Test
     public void shouldGreetUserInJapanese(){
         GreetCounter greetUser = new GreetCounterDB();
-        assertEquals("Konichiwa, Nathri",greetUser.greet("Nathri", Language.Japanese));
+        assertEquals("Konichiwa, Nathri",greetUser.greet("Nathri", Language.japanese));
         assertEquals("Users: 1", greetUser.counter());
     }
 
     @Test
     public void shouldGreetUserInThai(){
         GreetCounter greetUser = new GreetCounterDB();
-        assertEquals("Sawa dee krahp, Nathri",greetUser.greet("Nathri", Language.Thai));
+        assertEquals("Sawa dee krahp, Nathri",greetUser.greet("Nathri", Language.thai));
         assertEquals("Users: 1", greetUser.counter());
     }
 

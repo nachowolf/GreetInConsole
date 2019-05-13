@@ -34,14 +34,19 @@ public class GreetCounterMap implements GreetCounter {
 
     @Override
     public String greeted() {
-//        ArrayList<String> result = new ArrayList<String>();
-        String result = "No users has been greeted.";
+
+        String result = "No users has been greeted";
+        int count = 0;
         if(userList.size() > 0){
             result = "";
             for(Map.Entry<String,Integer> entry : userList.entrySet()) {
                 String user = entry.getKey();
                 Integer greeted = entry.getValue();
-                result += "user: " + Helper.capitilize(user) + ", greeted: " + greeted + " \n";
+                result += "user: " + Helper.capitilize(user) + ", greeted: " + greeted;
+                if(++count != userList.size()){
+                    result+= "\n";
+                }
+
             }
         }
         return result;
@@ -49,7 +54,7 @@ public class GreetCounterMap implements GreetCounter {
 
     @Override
     public String greeted(String user) {
-        String result = "No such user has been greeted.";
+        String result = "No such user has been greeted";
         if (userList.containsKey(user)){
             result = "user: " + Helper.capitilize(user) + ", greeted: " + userList.get(user);
         }

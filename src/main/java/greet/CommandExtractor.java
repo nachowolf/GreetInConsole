@@ -1,8 +1,10 @@
 package greet;
 
 import greet.enums.*;
-import greet.greeter.GreetCounterMap;
-import greet.methods.Helper;
+import org.apache.commons.lang3.EnumUtils;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class CommandExtractor {
 
@@ -12,14 +14,15 @@ public class CommandExtractor {
 
     public CommandExtractor(String string){
         String[] hold = string.toLowerCase().split(" ");
-        this.command = GreetCommand.valueOf(hold[0]);
+        if(EnumUtils.isValidEnum(GreetCommand.class, hold[0])) {
+            this.command = GreetCommand.valueOf(hold[0]);
+        }
 
         if(hold.length >= 2){
             this.name = hold[1];
-            if(hold.length == 3){
-                this.language = Language.valueOf(hold[3]);
+            if(hold.length == 3 && EnumUtils.isValidEnum(Language.class, hold[2])){
+                this.language = Language.valueOf(hold[2]);
             }
-
         }
     }
 
