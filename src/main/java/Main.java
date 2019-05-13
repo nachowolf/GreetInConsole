@@ -1,33 +1,31 @@
 import greet.CommandExecuter;
 import greet.CommandExtractor;
+import greet.greeter.GreetCounter;
+import greet.greeter.GreetCounterMap;
 import greet.methods.Helper;
-import greet.greeter.*;
-
 
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Helper.print("###### CONSOLE GREETER APPLICATION ######");
         Helper.print(Helper.ANSI_GREEN + "Greet Console Application Started... " + Helper.ANSI_RESET);
         Scanner scanner = new Scanner(System.in);
         Helper helper = new Helper();
         GreetCounter counter = new GreetCounterMap();
         CommandExecuter executer = new CommandExecuter(counter);
-        while(true){
+        while (true) {
 
             CommandExtractor extractor = new CommandExtractor(scanner.nextLine());
             String result = executer.execute(extractor);
-            if(result.equals("quit")){
+            if (result.equals("quit")) {
                 helper.print(Helper.ANSI_RED + "Closing Greeter Application..." + Helper.ANSI_RESET);
                 break;
-            }
-            else{
+            } else {
                 helper.print(result);
             }
 
         }
-
 
     }
 }

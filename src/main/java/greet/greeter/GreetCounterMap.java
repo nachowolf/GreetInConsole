@@ -1,10 +1,11 @@
 package greet.greeter;
 
 
-import java.util.*;
-
 import greet.enums.Language;
 import greet.methods.Helper;
+
+import java.util.Map;
+import java.util.TreeMap;
 
 
 public class GreetCounterMap implements GreetCounter {
@@ -13,18 +14,18 @@ public class GreetCounterMap implements GreetCounter {
 
     @Override
     public String greet(String name) {
-        if(!userList.containsKey(name)){
+        if (!userList.containsKey(name)) {
             userList.put(name, 0);
         }
         Integer greets = userList.get(name);
-        userList.put(name, greets+1);
+        userList.put(name, greets + 1);
         return "Hello, " + Helper.capitilize(name);
 
     }
 
     @Override
     public String greet(String name, Language language) {
-        if(!userList.containsKey(name)){
+        if (!userList.containsKey(name)) {
             userList.put(name, 0);
         }
         Integer greets = userList.get(name);
@@ -37,14 +38,14 @@ public class GreetCounterMap implements GreetCounter {
 
         String result = "No users has been greeted";
         int count = 0;
-        if(userList.size() > 0){
+        if (userList.size() > 0) {
             result = "";
-            for(Map.Entry<String,Integer> entry : userList.entrySet()) {
+            for (Map.Entry<String, Integer> entry : userList.entrySet()) {
                 String user = entry.getKey();
                 Integer greeted = entry.getValue();
                 result += "user: " + Helper.capitilize(user) + ", greeted: " + greeted;
-                if(++count != userList.size()){
-                    result+= "\n";
+                if (++count != userList.size()) {
+                    result += "\n";
                 }
 
             }
@@ -55,7 +56,7 @@ public class GreetCounterMap implements GreetCounter {
     @Override
     public String greeted(String user) {
         String result = "No such user has been greeted";
-        if (userList.containsKey(user)){
+        if (userList.containsKey(user)) {
             result = "user: " + Helper.capitilize(user) + ", greeted: " + userList.get(user);
         }
         return result;

@@ -2,9 +2,6 @@ package greet.methods;
 
 import greet.enums.Language;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Helper {
 
     public static final String ANSI_RESET = "\u001B[0m";
@@ -17,19 +14,18 @@ public class Helper {
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
 
-    public static String capitilize(String string){
-        String capital = string.substring(0,1).toUpperCase() + string.substring(1);
+    public static String capitilize(String string) {
+        String capital = string.substring(0, 1).toUpperCase() + string.substring(1);
         return capital;
     }
 
-    public static String greetLanguage(Language language){
+    public static String greetLanguage(Language language) {
 
         String response = "Hello, ";
 
-        if(language == Language.japanese){
+        if (language == Language.japanese) {
             response = "Konichiwa, ";
-        }
-        else if(language == Language.thai){
+        } else if (language == Language.thai) {
             response = "Sawa dee krahp, ";
         }
 
@@ -47,7 +43,7 @@ public class Helper {
         return chosenLanguage;
     }
 
-    public static void print(String input){
+    public static void print(String input) {
 
         System.out.println(ANSI_CYAN + input + " " + ANSI_RESET);
 

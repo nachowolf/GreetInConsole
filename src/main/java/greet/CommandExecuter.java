@@ -1,84 +1,40 @@
 package greet;
 
+import greet.commands.*;
 import greet.enums.GreetCommand;
-//import greet.enums.GreetCommand.*;
-import greet.enums.Language;
 import greet.greeter.GreetCounter;
-import greet.methods.Helper;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class CommandExecuter {
 
-    GreetCounter app;
+    Map<GreetCommand, Command> commandsAvailable = new HashMap<>();
+    private GreetCounter counter;
 
-   public CommandExecuter(GreetCounter counter){
-    this.app = counter;
-   }
+    public CommandExecuter(GreetCounter counter) {
+        this.counter = counter;
+        commandsAvailable.put(GreetCommand.greet, new CommandGreet(this.counter));
+        commandsAvailable.put(GreetCommand.greeted, new CommandGreeted(this.counter));
+        commandsAvailable.put(GreetCommand.counter, new CommandCounter(this.counter));
+        commandsAvailable.put(GreetCommand.help, new CommandHelp());
+        commandsAvailable.put(GreetCommand.clear, new CommandClear(this.counter));
+        commandsAvailable.put(GreetCommand.quit, new CommandQuit());
 
+    }
 
-    public String execute(CommandExtractor extractor) {
-     String result = "";
+    public String execute(CommandExtractor extract) {
 
-        GreetCommand command = extractor.getCommand();
-        String name = extractor.getName();
-        Language lang = extractor.getLanguage();
-        result = "Not a valid option. Enter `help` to see all available commands.";
-        if(command == null){
-            result = "Not a valid option. Enter `help` to see all available commands.";
-        }
-        else {
-            switch (command) {
-                case greet:
-                    if (name != null) {
-                        if (lang != null) {
-                            result = app.greet(name, lang);
-                        } else {
-                            result = app.greet(name);
-                        }
-                    }
-                    break;
+        GreetCommand command = extract.getCommand();
 
-                case greeted:
-                    if (name != null) {
-                        result = app.greeted(name);
-                    } else {
-                        result = app.greeted();
-                    }
-                    break;
+        Command commandToExecute = this.commandsAvailable.get(command);
 
-                case counter:
-                    result = app.counter();
-                    break;
-
-                case clear:
-                    if (name != null) {
-                        result = app.clear(name);
-                    } else {
-                        result = app.clear();
-                    }
-                    break;
-
-                case help:
-                    String allCommands = "Greeter Application Commands:\n";
-                    int count = 0;
-                    for (GreetCommand option : GreetCommand.values()) {
-                        allCommands += option;
-                        if (++count != GreetCommand.values().length) {
-                            allCommands += "\n";
-                        }
-                    }
-                    result = allCommands;
-                    break;
-
-                case quit:
-                    result = "quit";
-                    break;
-
-                default:
-                    result = "Not a valid option. Enter `help` to see all available commands.";
-            }
+        if (commandToExecute != null) {
+            return commandToExecute.execute(extract);
+        } else {
+            return "invalid command.";
         }
 
-     return result;
     }
-    }
+}
 

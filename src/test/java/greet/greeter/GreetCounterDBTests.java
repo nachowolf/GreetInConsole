@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
-import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -18,61 +17,62 @@ public class GreetCounterDBTests {
         System.out.println("Successfully Connected to the database!");
         return conn;
     }
+
     @BeforeEach
     public void cleanUpTables() {
         try {
-            try(Connection conn = getConnection()) {
+            try (Connection conn = getConnection()) {
 
                 Statement statement = conn.createStatement();
                 statement.addBatch("TRUNCATE table users");
                 statement.executeBatch();
 
             }
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             System.out.println("These test will fail until the users table is created: " + ex);
         }
     }
 
     @Test
-    public void shouldGreetUserInEnglish(){
+    public void shouldGreetUserInEnglish() {
         GreetCounter greetCounter = new GreetCounterDB();
         assertEquals("Hello, Nathri", greetCounter.greet("Nathri", Language.english));
         assertEquals("Users: 1", greetCounter.counter());
     }
 
     @Test
-    public void shouldGreetUserInJapanese(){
+    public void shouldGreetUserInJapanese() {
         GreetCounter greetUser = new GreetCounterDB();
-        assertEquals("Konichiwa, Nathri",greetUser.greet("Nathri", Language.japanese));
+        assertEquals("Konichiwa, Nathri", greetUser.greet("Nathri", Language.japanese));
         assertEquals("Users: 1", greetUser.counter());
     }
 
     @Test
-    public void shouldGreetUserInThai(){
+    public void shouldGreetUserInThai() {
         GreetCounter greetUser = new GreetCounterDB();
-        assertEquals("Sawa dee krahp, Nathri",greetUser.greet("Nathri", Language.thai));
+        assertEquals("Sawa dee krahp, Nathri", greetUser.greet("Nathri", Language.thai));
         assertEquals("Users: 1", greetUser.counter());
     }
 
     @Test
-    public void shouldGreetUserInEnglishByDefault(){
+    public void shouldGreetUserInEnglishByDefault() {
         GreetCounter greetUser = new GreetCounterDB();
-        assertEquals("Hello, Nathri",greetUser.greet("Nathri"));
+        assertEquals("Hello, Nathri", greetUser.greet("Nathri"));
         assertEquals("Users: 1", greetUser.counter());
     }
 
     @Test
-    public void shouldShowHowManyTimesEachUserHasBeenGreeted(){
+    public void shouldShowHowManyTimesEachUserHasBeenGreeted() {
         GreetCounter greetUser = new GreetCounterDB();
         greetUser.greet("Nathri");
         greetUser.greet("James");
         greetUser.greet("Nathri");
         greetUser.greet("Thomas");
-        assertEquals("user: James, greeted: 1 user: Nathri, greeted: 2 user: Thomas, greeted: 1", greetUser.greeted().replaceAll("\n", " ").replaceAll("\r"," "));
+        assertEquals("user: James, greeted: 1 user: Nathri, greeted: 2 user: Thomas, greeted: 1", greetUser.greeted().replaceAll("\n", " ").replaceAll("\r", " "));
     }
 
     @Test
-    public void shouldShowHowManyTimesUsersHasBeenGreeted(){
+    public void shouldShowHowManyTimesUsersHasBeenGreeted() {
         GreetCounter greetUser = new GreetCounterDB();
         greetUser.greet("Nathri");
         greetUser.greet("Nathri");
@@ -80,7 +80,7 @@ public class GreetCounterDBTests {
     }
 
     @Test
-    public void shouldShowHowManyTimesASpecificUserHasBeenGreeted(){
+    public void shouldShowHowManyTimesASpecificUserHasBeenGreeted() {
         GreetCounter greetUser = new GreetCounterDB();
         greetUser.greet("Nathri");
         greetUser.greet("Nathri");
@@ -92,7 +92,7 @@ public class GreetCounterDBTests {
     }
 
     @Test
-    public void shouldClearListOfUsers(){
+    public void shouldClearListOfUsers() {
         GreetCounter greetUser = new GreetCounterDB();
         greetUser.greet("Nathri");
         greetUser.greet("John");
@@ -105,7 +105,7 @@ public class GreetCounterDBTests {
     }
 
     @Test
-    public void shouldClearOneGreetedUsers(){
+    public void shouldClearOneGreetedUsers() {
         GreetCounter greetUser = new GreetCounterDB();
         greetUser.greet("Nathri");
         greetUser.greet("John");

@@ -3,13 +3,14 @@ package greet;
 import greet.greeter.GreetCounter;
 import greet.greeter.GreetCounterMap;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CommandExecuterMapTests {
     GreetCounter greetCounter = new GreetCounterMap();
 
     @Test
-    public void executeGreetUser(){
+    public void executeGreetUser() {
         CommandExecuter executer = new CommandExecuter(greetCounter);
         CommandExtractor extractor = new CommandExtractor("greet nathri");
 
@@ -17,7 +18,7 @@ public class CommandExecuterMapTests {
     }
 
     @Test
-    public void executeGreetUserThai(){
+    public void executeGreetUserThai() {
         CommandExecuter executer = new CommandExecuter(greetCounter);
         CommandExtractor extractor = new CommandExtractor("greet nathri thai");
 
@@ -25,7 +26,7 @@ public class CommandExecuterMapTests {
     }
 
     @Test
-    public void executeGreetUserJapanese(){
+    public void executeGreetUserJapanese() {
         CommandExecuter executer = new CommandExecuter(greetCounter);
         CommandExtractor extractor = new CommandExtractor("greet nathri japanese");
 
@@ -33,7 +34,7 @@ public class CommandExecuterMapTests {
     }
 
     @Test
-    public void executeGreetedSingleUser(){
+    public void executeGreetedSingleUser() {
         CommandExecuter executer = new CommandExecuter(greetCounter);
 
         CommandExtractor extract1 = new CommandExtractor("greet nathri");
@@ -50,7 +51,7 @@ public class CommandExecuterMapTests {
     }
 
     @Test
-    public void executeGreeted(){
+    public void executeGreeted() {
         CommandExecuter executer = new CommandExecuter(greetCounter);
 
         CommandExtractor extract1 = new CommandExtractor("greet nathri");
@@ -137,14 +138,14 @@ public class CommandExecuterMapTests {
     }
 
     @Test
-    public void executeHelp(){
+    public void executeHelp() {
         CommandExecuter executer = new CommandExecuter(greetCounter);
         CommandExtractor extractor = new CommandExtractor("help");
         assertEquals("Greeter Application Commands: greet quit help greeted clear counter", executer.execute(extractor).replaceAll("\n", " ").replaceAll("\r", " "));
     }
 
     @Test
-    public void executeQuit(){
+    public void executeQuit() {
         CommandExecuter executer = new CommandExecuter(greetCounter);
         CommandExtractor extractor = new CommandExtractor("quit");
         assertEquals("quit", executer.execute(extractor));

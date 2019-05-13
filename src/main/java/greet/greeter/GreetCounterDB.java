@@ -4,10 +4,8 @@ import greet.enums.Language;
 import greet.methods.Helper;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
-public class GreetCounterDB  implements GreetCounter {
+public class GreetCounterDB implements GreetCounter {
 
     final String COUNT_ALL_USERS_SQL = "select count(*) from users";
 
@@ -26,7 +24,6 @@ public class GreetCounterDB  implements GreetCounter {
     final String DELETE_ALL_USERS_SQL = "truncate table users";
 
 
-
     Connection conn;
     PreparedStatement psCountAllUsers;
     PreparedStatement psGetAllUsers;
@@ -37,7 +34,7 @@ public class GreetCounterDB  implements GreetCounter {
     PreparedStatement psDeleteUser;
     PreparedStatement psDeleteAllUsers;
 
-    public GreetCounterDB(){
+    public GreetCounterDB() {
         try {
 
 //            Class.forName("org.h2.Driver");
@@ -52,7 +49,7 @@ public class GreetCounterDB  implements GreetCounter {
             psDeleteUser = conn.prepareStatement(DELETE_USER_SQL);
             psDeleteAllUsers = conn.prepareStatement(DELETE_ALL_USERS_SQL);
 
-        } catch(Exception ex) {
+        } catch (Exception ex) {
 
             ex.printStackTrace();
         }
@@ -81,8 +78,7 @@ public class GreetCounterDB  implements GreetCounter {
 
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }
-       finally {
+        } finally {
             return "Hello, " + Helper.capitilize(name);
         }
     }
@@ -109,8 +105,7 @@ public class GreetCounterDB  implements GreetCounter {
 
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }
-        finally {
+        } finally {
             return Helper.greetLanguage(language) + Helper.capitilize(name);
         }
     }
@@ -127,22 +122,21 @@ public class GreetCounterDB  implements GreetCounter {
             rs.next();
             int maxUsers = rs.getInt(1);
 
-           if(maxUsers != 0){
-               result = "";
-               while (rsUsers.next()) {
-                   String user = rsUsers.getString("name");
-                   Integer greeted = rsUsers.getInt("greets");
-                   result += "user: " + Helper.capitilize(user) + ", greeted: " + greeted;
-                   if(++count != maxUsers){
-                       result+= "\n";
-                   }
-               }
-           }
+            if (maxUsers != 0) {
+                result = "";
+                while (rsUsers.next()) {
+                    String user = rsUsers.getString("name");
+                    Integer greeted = rsUsers.getInt("greets");
+                    result += "user: " + Helper.capitilize(user) + ", greeted: " + greeted;
+                    if (++count != maxUsers) {
+                        result += "\n";
+                    }
+                }
+            }
 
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }
-        finally {
+        } finally {
             return result;
         }
     }
@@ -155,7 +149,7 @@ public class GreetCounterDB  implements GreetCounter {
             psFindUser.setString(1, name);
             ResultSet rsUserFound = psFindUser.executeQuery();
 
-            if(rsUserFound.next()){
+            if (rsUserFound.next()) {
                 String user = rsUserFound.getString("name");
                 Integer greeted = rsUserFound.getInt("greets");
                 result = "user: " + Helper.capitilize(user) + ", greeted: " + greeted;
@@ -163,11 +157,10 @@ public class GreetCounterDB  implements GreetCounter {
 
         } catch (SQLException ex) {
             ex.printStackTrace();
-    }
-        finally {
+        } finally {
             return result;
         }
-        }
+    }
 
     @Override
     public String counter() {
@@ -187,14 +180,13 @@ public class GreetCounterDB  implements GreetCounter {
     @Override
     public String clear() {
         String result = null;
-        try{
+        try {
             psDeleteAllUsers.execute();
             result = "All users have been deleted";
 
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             return result;
         }
     }
@@ -202,14 +194,13 @@ public class GreetCounterDB  implements GreetCounter {
     @Override
     public String clear(String name) {
         String result = "No such user";
-        try{
+        try {
             psDeleteUser.setString(1, name);
             psDeleteUser.execute();
             result = "User has been deleted";
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             return result;
         }
     }
