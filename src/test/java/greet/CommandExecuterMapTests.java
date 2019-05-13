@@ -150,4 +150,18 @@ public class CommandExecuterMapTests {
         CommandExtractor extractor = new CommandExtractor("quit");
         assertEquals("quit", executer.execute(extractor));
     }
+
+    @Test
+    public void executeCommandNull() {
+        CommandExecuter executer = new CommandExecuter(greetCounter);
+        CommandExtractor extractor = new CommandExtractor("grapes");
+        assertEquals("invalid command.", executer.execute(extractor));
+    }
+
+    @Test
+    public void executeGreetNullName() {
+        CommandExecuter executer = new CommandExecuter(greetCounter);
+        CommandExtractor extractor = new CommandExtractor("greet");
+        assertEquals("Please specify a name.", executer.execute(extractor));
+    }
 }
