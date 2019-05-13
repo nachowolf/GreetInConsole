@@ -127,7 +127,8 @@ public class GreetCounterDB  implements GreetCounter {
             rs.next();
             int maxUsers = rs.getInt(1);
 
-           if(rsUsers.next()){
+           if(maxUsers != 0){
+               result = "";
                while (rsUsers.next()) {
                    String user = rsUsers.getString("name");
                    Integer greeted = rsUsers.getInt("greets");

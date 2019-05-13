@@ -68,7 +68,7 @@ public class GreetCounterDBTests {
         greetUser.greet("James");
         greetUser.greet("Nathri");
         greetUser.greet("Thomas");
-        assertEquals(Arrays.asList("user: James, greeted: 1", "user: Nathri, greeted: 2", "user: Thomas, greeted: 1"), greetUser.greeted());
+        assertEquals("user: James, greeted: 1 user: Nathri, greeted: 2 user: Thomas, greeted: 1", greetUser.greeted().replaceAll("\n", " ").replaceAll("\r"," "));
     }
 
     @Test
