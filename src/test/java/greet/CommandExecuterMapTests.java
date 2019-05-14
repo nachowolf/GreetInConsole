@@ -141,7 +141,7 @@ public class CommandExecuterMapTests {
     public void executeHelp() {
         CommandExecuter executer = new CommandExecuter(greetCounter);
         CommandExtractor extractor = new CommandExtractor("help");
-        assertEquals("Greeter Application Commands: greet quit help greeted clear counter", executer.execute(extractor).replaceAll("\n", " ").replaceAll("\r", " "));
+        assertEquals("Greeter Application Commands: greet : Can be used as 'greet <user>' or 'greet <user> <language>'. greets in English by default. quit : Exits application. help : Prints list of available command greeted : 'greeted' returns all users that has been greeted and how many times they have been greeted.'greeted <user>' returns a specific user. clear : 'clear' removes all users that has been greeted and 'clear <user>' removes a specific user. counter : returns how many users have been greeted", executer.execute(extractor).replaceAll("\n", " ").replaceAll("\r", " "));
     }
 
     @Test
@@ -163,5 +163,50 @@ public class CommandExecuterMapTests {
         CommandExecuter executer = new CommandExecuter(greetCounter);
         CommandExtractor extractor = new CommandExtractor("greet");
         assertEquals("Please specify a name.", executer.execute(extractor));
+    }
+
+    @Test
+    public void executeClearEmptyUsersCount() {
+        CommandExecuter executer = new CommandExecuter(greetCounter);
+        CommandExtractor extractor = new CommandExtractor("clear");
+        assertEquals("No users have been greeted", executer.execute(extractor));
+    }
+
+    @Test
+    public void executeClearUsersThenClearEmptyUsersCount() {
+        CommandExecuter executer = new CommandExecuter(greetCounter);
+
+        CommandExtractor extractor1 = new CommandExtractor("greet john");
+        executer.execute(extractor1);
+
+        CommandExtractor extractor2 = new CommandExtractor("greet jack");
+        executer.execute(extractor2);
+
+        CommandExtractor extractor3 = new CommandExtractor("clear");
+        assertEquals("All users have been deleted", executer.execute(extractor3));
+
+        CommandExtractor extractor4 = new CommandExtractor("clear");
+        assertEquals("No users have been greeted", executer.execute(extractor4));
+    }
+
+    @Test
+    public void executeClearEmptyUserCount() {
+        CommandExecuter executer = new CommandExecuter(greetCounter);
+        CommandExtractor extractor = new CommandExtractor("clear nat");
+        assertEquals("No such user has been greeted", executer.execute(extractor));
+    }
+
+    @Test
+    public void executeClearUserThenClearEmptyUserCount() {
+        CommandExecuter executer = new CommandExecuter(greetCounter);
+
+        CommandExtractor extractor1 = new CommandExtractor("greet john");
+        executer.execute(extractor1);
+
+        CommandExtractor extractor2 = new CommandExtractor("clear john");
+        assertEquals("User has been deleted", executer.execute(extractor2));
+
+        CommandExtractor extractor3 = new CommandExtractor("clear john");
+        assertEquals("No such user has been greeted", executer.execute(extractor3));
     }
 }

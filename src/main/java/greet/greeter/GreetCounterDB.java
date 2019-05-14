@@ -179,10 +179,15 @@ public class GreetCounterDB implements GreetCounter {
 
     @Override
     public String clear() {
-        String result = null;
+        String result = "No users have been greeted";
         try {
-            psDeleteAllUsers.execute();
-            result = "All users have been deleted";
+            ResultSet rs = psCountAllUsers.executeQuery();
+            rs.next();
+            Integer count = rs.getInt(1);
+            if(count > 0){
+                psDeleteAllUsers.execute();
+                result = "All users have been deleted";
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -193,11 +198,18 @@ public class GreetCounterDB implements GreetCounter {
 
     @Override
     public String clear(String name) {
-        String result = "No such user";
+
+        String result = "No such user has been greeted";
+
         try {
-            psDeleteUser.setString(1, name);
-            psDeleteUser.execute();
-            result = "User has been deleted";
+            psFindUser.setString(1, name);
+            ResultSet rsUserFound = psFindUser.executeQuery();
+
+            if (rsUserFound.next()) {
+                psDeleteUser.setString(1, name);
+                psDeleteUser.execute();
+                result = "User has been deleted";
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

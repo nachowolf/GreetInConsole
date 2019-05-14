@@ -13,6 +13,7 @@ public class CommandExtractorTests {
         CommandExtractor extractor = new CommandExtractor("Greet nathri");
         assertEquals(GreetCommand.greet, extractor.getCommand());
         assertEquals("nathri", extractor.getName());
+        assertEquals(Language.english, extractor.getLanguage());
     }
 
     @Test

@@ -14,7 +14,7 @@ public class GreetCounterDBTests {
 
     public Connection getConnection() throws Exception {
         Connection conn = DriverManager.getConnection("jdbc:h2:./target/users", "sa", "");
-        System.out.println("Successfully Connected to the database!");
+//        System.out.println("Successfully Connected to the database!");
         return conn;
     }
 

@@ -19,6 +19,7 @@ public class CommandExtractor {
 
         if (hold.length >= 2) {
             this.name = hold[1];
+            this.language = Language.english;
         }
 
         if (hold.length == 3 && EnumUtils.isValidEnum(Language.class, hold[2])) {

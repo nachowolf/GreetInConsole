@@ -17,6 +17,7 @@ public class GreetCounterMap implements GreetCounter {
         if (!userList.containsKey(name)) {
             userList.put(name, 0);
         }
+
         Integer greets = userList.get(name);
         userList.put(name, greets + 1);
         return "Hello, " + Helper.capitilize(name);
@@ -29,7 +30,7 @@ public class GreetCounterMap implements GreetCounter {
             userList.put(name, 0);
         }
         Integer greets = userList.get(name);
-        userList.put(name, greets++);
+        userList.put(name, greets + 1);
         return Helper.greetLanguage(language) + Helper.capitilize(name);
     }
 
@@ -69,13 +70,24 @@ public class GreetCounterMap implements GreetCounter {
 
     @Override
     public String clear() {
-        userList.clear();
-        return "All users have been deleted";
+        if(userList.size() == 0){
+            return "No users have been greeted";
+        }
+        else{
+            userList.clear();
+            return "All users have been deleted";
+        }
+
     }
 
     @Override
     public String clear(String user) {
-        userList.remove(user);
-        return "User has been deleted";
+        if(!userList.containsKey(user)){
+            return "No such user has been greeted";
+        }
+        else{
+            userList.remove(user);
+            return "User has been deleted";
+        }
     }
 }
